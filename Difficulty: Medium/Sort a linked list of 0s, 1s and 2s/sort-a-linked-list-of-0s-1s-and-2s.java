@@ -1,51 +1,48 @@
-/* class Node
-{
+/*
+class Node {
     int data;
     Node next;
-    Node(int data)
+
+    Node(int d)
     {
-        this.data = data;
+        data = d;
         next = null;
     }
 }*/
+
 class Solution {
-    static Node segregate(Node head) {
+    public Node segregate(Node head) {
         // code here
-        int count0 = 0 , count1 = 0 , count2 = 0;
+        int c0 = 0 , c1 = 0 , c2 = 0;
         Node temp = head;
         
         while(temp != null){
-            if(temp.data == 0){
-                count0++;
-            }    
-            if(temp.data == 1){
-              count1++;  
-            } 
-            if(temp.data == 2){
-                count2++;
-            }    
+            if(temp.data == 0) c0++;
+            else if(temp.data == 1) c1++;
+            else c2++;
+            
             temp = temp.next;
         }
         
         temp = head;
         
-        while( count0 != 0){
+        while(c0 != 0){
             temp.data = 0;
             temp = temp.next;
-            count0--;
+            c0--;
         }
-        
-        while( count1 != 0){
+        while(c1 != 0){
             temp.data = 1;
             temp = temp.next;
-            count1--;
+            c1--;
         }
-        
-        while( count2 != 0){
+        while(c2 != 0){
             temp.data = 2;
             temp = temp.next;
-            count2--;
+            c2--;
         }
+        
+        
         return head;
     }
 }
