@@ -1,3 +1,6 @@
+//---------------------------------------------------------( APPORACH - 2 )---------------------------------------------------------------------
+//TC: O(n)
+
 class Solution {
     public int searchInsertK(int arr[], int k) {
         // code here
@@ -23,5 +26,39 @@ class Solution {
         }
         return idx;
         
+    }
+};
+
+
+//---------------------------------------------------------( APPORACH - 2 )---------------------------------------------------------------------
+// TC: O(logn)
+//BINARY SEARCH
+
+
+
+class Solution {
+    public int searchInsertK(int arr[], int k) {
+        // code here
+        int n = arr.length;
+        
+        //BINARY SEARCH
+        int l = 0, r = n - 1;
+        
+        while(l <= r){
+            
+            int mid = l + (r - l) / 2;
+            
+            if(arr[mid] == k) return mid;
+            
+            else if(arr[mid] < k){
+                l = mid + 1;
+            }
+            
+            else{
+                r = mid - 1;
+            }
+        }
+        
+        return l;
     }
 };
