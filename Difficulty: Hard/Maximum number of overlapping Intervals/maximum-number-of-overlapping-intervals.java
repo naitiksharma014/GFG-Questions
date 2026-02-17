@@ -1,3 +1,7 @@
+//------------------------------------------------------(APPROACH - 1)-----------------------------------------------------------------------------------
+// Line Sweep Technique
+// TC: O(N logN)
+// SC: O(N)
 
 class Solution {
     public static int overlapInt(int[][] arr) {
@@ -19,6 +23,47 @@ class Solution {
         for(int event: events.values()){
             
             overLap += event;
+            maxOverLap = Math.max(maxOverLap, overLap);
+        }
+        
+        return maxOverLap;
+    }
+}
+
+
+
+
+//------------------------------------------------------(APPROACH - 2)-----------------------------------------------------------------------------------
+// Difference Array
+// TC: O(N + R)  (R = max coordinate range)
+// SC: O(R)
+
+
+class Solution {
+    public static int overlapInt(int[][] arr) {
+        // code here
+        int MAX = 0;
+        for(int[] ar: arr){
+            MAX = Math.max(MAX, ar[1]);
+        }
+        
+        int[] diffArray = new int[MAX + 2];  // end + 1 will be out  of bound therefore +2
+        
+        for(int[] ar: arr){
+            
+            int start = ar[0];
+            int end   = ar[1];
+            
+            diffArray[start]   += 1;
+            diffArray[end + 1] -= 1;
+        }
+        
+        int maxOverLap = 0;
+        int overLap = 0;
+        
+        for(int value: diffArray){
+            
+            overLap += value;
             maxOverLap = Math.max(maxOverLap, overLap);
         }
         
