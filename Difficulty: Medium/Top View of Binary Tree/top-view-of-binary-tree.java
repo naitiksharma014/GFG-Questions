@@ -10,61 +10,65 @@ class Node {
     }
 }
 */
-// TC: O(n)
-// SC: O(n)
 
-class pair {
+// Time: O(N log N) (due to TreeMap)
+// Space: O(N)
+
+class Pair {
     Node root;
-    int index;
+    int hd;
     
-    pair(Node root, int index){
+    Pair(Node root, int hd) {
         this.root = root;
-        this.index = index;
+        this.hd = hd;
     }
 }
 
 class Solution {
+    TreeMap<Integer, Integer> map = new TreeMap<>();
+    
+    public void solve(Node root) {
+        if(root == null) {
+            return;
+        }
+        
+        Queue<Pair> q = new LinkedList<>();
+        q.add(new Pair(root, 0));
+        
+        while(!q.isEmpty()) {
+            
+            Pair curr = q.poll();
+            
+            Node currRoot = curr.root;
+            int  hd       = curr.hd;
+            
+            if(!map.containsKey(hd)) {  // key -> value
+                map.put(hd, currRoot.data);
+            }
+            
+            if(currRoot.left != null) {
+                q.add(new Pair(currRoot.left, hd - 1));
+            }
+            if(currRoot.right != null) {
+                q.add(new Pair(currRoot.right, hd + 1));
+            }
+        }
+    }
+    
     public ArrayList<Integer> topView(Node root) {
         // code here
-        ArrayList<Integer> res = new ArrayList<>();
-        if(root == null){
-            return res;
+        ArrayList<Integer> list = new ArrayList<>();
+        
+        if(root == null) {
+            return list;
         }
         
-        Map<Integer, Node> map = new HashMap<>();
-        Queue<pair> q = new LinkedList<>();
-        int min = 0, max = 0;
+        solve(root);
         
-        q.add(new pair(root, 0));
-        //q.add(new pair(null));
-        
-        while(!q.isEmpty()){
-            
-            pair curr = q.poll();
-            Node currRoot = curr.root;
-            int currIdx = curr.index;
-            
-            if(!map.containsKey(currIdx)){
-                map.put(currIdx, currRoot);
-            }
-            
-            if(currRoot.left != null){
-                min = Math.min(min, currIdx - 1);
-                q.add(new pair(currRoot.left, currIdx - 1));
-            }
-            
-             if(currRoot.right != null){
-                max = Math.max(max, currIdx + 1);
-                q.add(new pair(currRoot.right, currIdx + 1));
-            }
+        for(int value: map.values()) {
+            list.add(value);
         }
         
-        for(int i = min; i <= max; i++){
-            Node r = map.get(i);
-            res.add(r.data);
-        }
-        
-        return res;
-        
+        return list;
     }
 }
